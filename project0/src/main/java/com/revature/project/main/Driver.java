@@ -12,7 +12,7 @@ public class Driver {
 	public static void main(String[] args) {
 		
 		try {
-			Connection con = ConnectionUtil.getConnectionFromFile("/Users/Em/Desktop/BaillieE/Examples/project0/src/main/java/com/revature/project/main/connections.properties");
+			Connection con = ConnectionUtil.getConnectionFromFile("C:/DeborahEmily/project0/src/main/java/com/revature/project/main/connections.properties");
 			System.out.println(con);
 			} catch (SQLException e) {
 				e.printStackTrace();
