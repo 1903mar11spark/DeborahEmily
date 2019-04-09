@@ -4,15 +4,17 @@ public class TransactionHistory {
 	
 	
 	
-	public TransactionHistory(int transactionId, double deposit, double withdraw) {
+	public TransactionHistory(Accounts account, int transactionId, double deposit, double withdraw) {
+		this.account=account;
 		this.transactionId = transactionId;
 		this.deposit = deposit;
 		this.withdraw = withdraw;
 	}
 	
-	protected int transactionId;
-	protected double deposit;
-	protected double withdraw;
+	private int transactionId;
+	private double deposit;
+	private double withdraw;
+	private Accounts account;
 	
 	public int getTransactionId() {
 		return transactionId;
@@ -32,12 +34,18 @@ public class TransactionHistory {
 	public void setWithdraw(double withdraw) {
 		this.withdraw = withdraw;
 	}
-	
+	public Accounts getAccount() {
+		return account;
+	}
+	public void setAccount(Accounts account) {
+		this.account=account;
+	}
 	@Override
 	public String toString() {
 		return "TransactionHistory [transactionId=" + transactionId + ", deposit=" + deposit + ", withdraw=" + withdraw
-				+ "]";
+				+ ", account=" + account + "]";
 	}
+	
 	
 	
 	
