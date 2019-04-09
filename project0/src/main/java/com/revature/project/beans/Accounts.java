@@ -1,50 +1,60 @@
 package com.revature.project.beans;
 
-public class Accounts {
-	
+public class Accounts  {
+
 	public Accounts() {
 		super();
 	}
-	
-	public Accounts(int accountId, String accountType, double accountBalance) {
-		AccountId = accountId;
-		AccountType = accountType;
-		AccountBalance = accountBalance;
+
+	public Accounts(BankUser user, int accountId, String accountType) {
+		super();
+		this.accountId = accountId;
+		this.accountType = accountType;
 	}
-	
-	protected int AccountId;
-	protected String AccountType;
-	protected double AccountBalance;
-	
+	/*
+	public Accounts(int userId, String username, int password) {
+		super(userId, username, password);
+		// TODO Auto-generated constructor stub
+	}*/
+
+	private int accountId;
+	private String accountType;
+	private double accountBalance;
+	private BankUser user;
+
+
 	public int getAccountId() {
-		return AccountId;
+		return accountId;
 	}
 	public void setAccountId(int accountId) {
-		AccountId = accountId;
+		this.accountId = accountId;
 	}
 	public String getAccountType() {
-		return AccountType;
+		return accountType;
 	}
 	public void setAccountType(String accountType) {
-		AccountType = accountType;
+		this.accountType = accountType;
 	}
 	public double getAccountBalance() {
-		return AccountBalance;
+		return accountBalance;
 	}
 	public void setAccountBalance(double accountBalance) {
-		AccountBalance = accountBalance;
+		this.accountBalance = accountBalance;
 	}
-	
+	public BankUser getUser() {
+		return user;
+	}
+	public void setUser(BankUser user) {
+		this.user=user;
+	}
+
 	@Override
 	public String toString() {
-		return "Accounts [AccountId=" + AccountId + ", AccountType=" + AccountType + ", AccountBalance="
-				+ AccountBalance + "]";
+		return "Accounts [AccountId=" + accountId + ", AccountType=" + accountType + ", AccountBalance="
+				+ accountBalance + "]";
 	}
-	
-	
-	
-	
-	
-	
+
+
+
 
 }

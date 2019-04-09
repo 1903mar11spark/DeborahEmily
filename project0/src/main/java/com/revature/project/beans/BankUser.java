@@ -5,20 +5,21 @@ package com.revature.project.beans;
 public class BankUser {
 	
 	public BankUser(int userId, String username, int password) {
-		UserId = userId;
+		super();
+		this.userId = userId;
 		this.username = username;
 		this.password = password;
 	}
 	
-	protected int UserId;	
+	protected int userId;	
 	protected String username;
 	protected int password;
 	
 	public int getUserId() {
-		return UserId;
+		return userId;
 	}
 	public void setUserId(int userId) {
-		UserId = userId;
+		this.userId = userId;
 	}
 	public String getUsername() {
 		return username;
