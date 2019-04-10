@@ -20,14 +20,12 @@ public class AccountDAOImpl implements AccountDAO {
 
 	@Override //return for superuser
 	public List<Accounts> getAccounts() {
-		//HashMap<accounts.getAccountId(), accounts.getAccountBalance()> accounts = new HashMap<>();
 		List<Accounts> accounts = new ArrayList<>();
-
 		try (Connection con = ConnectionUtil.getConnection()){
 			String sql = "SELECT A.ACCOUNTS_ID, A.ACCOUNTS_TYPES, A.ACCOUNT_BALANCE, U.USER_ID,U.USERNAME,U.USERPASSWORD FROM ACCOUNTS A"
 					+ "INNER JOIN BANK_USER U ON A.USER_ID = U.USER_ID";
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery(sql);
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery(sql);
 			while(rs.next()) {
 				int userId = rs.getInt("USER_ID");
 				String username = rs.getString("USERNAME");
@@ -52,7 +50,7 @@ public class AccountDAOImpl implements AccountDAO {
 					+ "INNER JOIN BANK_USER U ON A.USER_ID = U.USER_ID WHERE U.USERNAME=? AND U.USERPASSWORD=?";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1,  username);
-			pstmt.setInt(1, password);
+			pstmt.setInt(2, password);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()) {
 				int userId = rs.getInt("USER_ID");
@@ -71,10 +69,9 @@ public class AccountDAOImpl implements AccountDAO {
 	public void createAccount(BankUser user) {
 		Accounts account = null;
 		try (Connection con = ConnectionUtil.getConnection()){
-			String sql = "INSERT INTO ACCOUNT (ACCOUNT_TYPE, ACCOUNT_BALANCE) VALUES (?, ?)";
+			String sql = "INSERT INTO ACCOUNT (USER_ID, ACCOUNT_TYPE, ACCOUNT_BALANCE) VALUES (?, ?, ?)";
 			PreparedStatement pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, account.getAccountId());
-			pstmt.setInt(2, user.getUserId());
+			pstmt.setInt(3, account.getUser().getUserId());
 			pstmt.setString(3, account.getAccountType());
 			pstmt.setDouble(4, account.getAccountBalance());
 			pstmt.executeUpdate();
@@ -95,7 +92,7 @@ public class AccountDAOImpl implements AccountDAO {
 		}
 	}
 	@Override
-	public void updateAccountByWithdraw(Accounts accounts, double withdraw) {//come back, finish if withdraw < currentBalance
+	public void updateAccountByWithdraw(Accounts accounts, double withdraw) {
 		if(withdraw > 0) {
 			try (Connection con = ConnectionUtil.getConnection()){
 				String sql = "{call SP_WITHDRAW(?,?,?)}";
@@ -108,8 +105,14 @@ public class AccountDAOImpl implements AccountDAO {
 			}catch (SQLException e) {
 				e.printStackTrace();
 			}		
-		}else {
+		}else if(accounts.getAccountBalance() < withdraw){
+			//throw exception here? do something else here?
+			//overdraft fee
+			
+		}
+		{
 			System.out.println("Please enter a positve number. ");
+			//If withdraw is greater than currentBalance
 		}
 	}
 	
