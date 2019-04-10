@@ -15,6 +15,9 @@ public class BankUser {
 		this.password = password;
 	}
 	
+	public BankUser() {
+	}
+
 	protected int userId;	
 	protected String username;
 	protected int password;
