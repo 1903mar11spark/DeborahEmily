@@ -131,3 +131,5 @@ testem.log
 #System Files
 .DS_Store
 
+# Ignore all text files
+*.txt
