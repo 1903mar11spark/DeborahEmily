@@ -19,7 +19,8 @@ public class Driver {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
+		
+		Access.gainAccess();
 		
 		}
 
