@@ -10,10 +10,11 @@ import java.util.List;
 
 import com.revature.project.beans.Accounts;
 import com.revature.project.beans.BankUser;
+import com.revature.project.exceptions.UserNotFoundException;
 import com.revature.project.util.ConnectionUtil;
 
 public class BankUserDAOImpl implements BankUserDAO{
-
+//Look over Exceptions 
 
 	@Override //returning all user from super login
 	public HashMap<Integer, String> getAllUsers() {
@@ -67,7 +68,7 @@ public class BankUserDAOImpl implements BankUserDAO{
 	}
 
 	@Override
-	public List<Accounts> getAccountId(int userId) {
+	public List<Accounts> getAccountId(int userId) throws UserNotFoundException{
 		List<Accounts> accounts = new ArrayList<>();
 		try (Connection con = ConnectionUtil.getConnection()){
 			String sql = "SELECT A.ACCOUNT_ID, U.USER_ID, U.USERNAME, U.USERPASSWORD, A.ACCOUNT_TYPE "
@@ -76,12 +77,12 @@ public class BankUserDAOImpl implements BankUserDAO{
 			ResultSet rs = pstmt.executeQuery(sql);
 			while (rs.next()) {
 				int accountId = rs.getInt("ACCOUNT_ID");
-				int userId = rs.getInt("USER_ID");
+				userId = rs.getInt("USER_ID");
 				String username = rs.getString("USERNAME");
 				int password = rs.getInt("PASSWORD");
 				String accountType = rs.getString("ACCOUNT_TYPE");
 
-				accounts.add(new Accounts(new BankUser(userId, username, password), accountId, accountType));
+				accounts.add(new Accounts(new BankUser(userId, username, password), accountType));
 			}
 
 		} catch (SQLException e) {
@@ -92,7 +93,7 @@ public class BankUserDAOImpl implements BankUserDAO{
 
 
 	@Override
-	public void deleteUser(int userId) {
+	public void deleteUser(int userId) throws UserNotFoundException {//callable statement
 		try (Connection con = ConnectionUtil.getConnection()){
 			String sql = "DELETE FROM BANKUSER WHERE USER_ID = ?";//ALSO ALL ACCOUNTS W/ USER_ID = ? AND TRANSACTION HISTORY
 			PreparedStatement pstmt = con.prepareStatement(sql);
