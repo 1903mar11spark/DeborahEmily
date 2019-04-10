@@ -4,11 +4,8 @@ public class TransactionHistory {
 	
 	
 	
-	public TransactionHistory(Accounts account, int transactionId, double deposit, double withdraw) {
+	public TransactionHistory(Accounts account) {
 		this.account=account;
-		this.transactionId = transactionId;
-		this.deposit = deposit;
-		this.withdraw = withdraw;
 	}
 	
 	private int transactionId;
