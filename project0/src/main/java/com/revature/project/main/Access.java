@@ -48,11 +48,11 @@ public class Access { //may need to be final
 	    switch (txt) {
 	    case 1:
 	    	System.out.println("You have selected User Login");
-	    	
+	    	userLogin(scan);
 	    	break;
 	    case 2:
 	    	System.out.println("You have selected Manager Login");
-	    	//managerLogin();
+	    	managerLogin(scan);
 	    	break;
 	    case 3:
 	    	System.out.println("You have selected to Exit the Application. Goodbye!");
@@ -63,25 +63,26 @@ public class Access { //may need to be final
 	
 	    }
 	  
-//	   public static void userLogin(String uLogin) {
-//	    System.out.println("Please Enter Username");
-//	    Scanner user = new Scanner(System.in);
-//	    String username = user.nextLine();
-//	    //String a = BankUserDaoImp.getUserName; 
-//	    switch(username) {
-//	    	case a://correct username
-//	    		System.out.println("Welcome" + username);
-//	    		//userPassword()
-//	    	case b:
-//	    		System.out.println("Incorrect Password. Please try again or contact Manager");
-//	    }
-//		   
-//	    public void managerLogin() {
-//	    	
-//	    }
-//	  public static BankUser getUserId() {
-//		  return user;
-//	  }
+	   public static void userLogin(Scanner scan) {
+	    System.out.println("Please Enter Username");
+	    String username = scan.nextLine();
+	    //String a = BankUserDaoImp.getUserName; 
+	    switch(username) {
+	    	case "" ://correct username
+	    		System.out.println("Welcome" + username);
+	    		BankUserDAOImpl.getPasword(scan);
+	    	case "\\w+":
+	    		System.out.println("Incorrect Password. Please try again or contact Manager");
+	    }
+		   
+	    public static void managerLogin() {
+	    	
+	    }
+	 
+	    
+	    public static BankUser getUserId() {
+		  return user;
+	  }
 		
 	
 }
