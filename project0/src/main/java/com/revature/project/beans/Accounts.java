@@ -8,19 +8,17 @@ public class Accounts  {
 
 	public Accounts(BankUser user, int accountId, String accountType) {
 		super();
+		this.user = user;
 		this.accountId = accountId;
 		this.accountType = accountType;
 	}
-	/*
-	public Accounts(int userId, String username, int password) {
-		super(userId, username, password);
-		// TODO Auto-generated constructor stub
-	}*/
+	
 
 	private int accountId;
 	private String accountType;
 	private double accountBalance;
 	private BankUser user;
+	private double overdraftFee;
 
 
 	public int getAccountId() {
@@ -47,14 +45,18 @@ public class Accounts  {
 	public void setUser(BankUser user) {
 		this.user=user;
 	}
-
-	@Override
-	public String toString() {
-		return "Accounts [AccountId=" + accountId + ", AccountType=" + accountType + ", AccountBalance="
-				+ accountBalance + "]";
+	public double getOverdraftFee() {
+		return overdraftFee;
 	}
 
+	public void setOverdraftFee(double overdraftFee) {
+		this.overdraftFee = overdraftFee;
+	}
+	@Override
+	public String toString() {
+		return "Accounts [accountId=" + accountId + ", accountType=" + accountType + ", accountBalance="
+				+ accountBalance + ", user=" + user + ", overdraftFee=" + overdraftFee + "]";
+	}
 
-
-
+	
 }

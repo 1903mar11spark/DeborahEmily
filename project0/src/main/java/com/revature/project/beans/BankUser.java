@@ -4,6 +4,10 @@ package com.revature.project.beans;
 
 public class BankUser {
 	
+	public BankUser() {
+		super();
+	}
+	
 	public BankUser(int userId, String username, int password) {
 		super();
 		this.userId = userId;
@@ -38,7 +42,7 @@ public class BankUser {
 	}
 	@Override
 	public String toString() {
-		return "BankUser [UserId=" + UserId + ", username=" + username + ", password=" + password + "]";
+		return "BankUser [UserId=" + userId + ", username=" + username + ", password=" + password + "]";
 	}
 	
 	
