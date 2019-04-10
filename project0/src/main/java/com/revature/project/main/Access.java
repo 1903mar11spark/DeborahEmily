@@ -66,11 +66,11 @@ public class Access { //may need to be final
 	   public static void userLogin(Scanner scan) {
 	    System.out.println("Please Enter Username");
 	    String username = scan.nextLine();
-	    //String a = BankUserDaoImp.getUserName; 
+	    String a = BankUserDaoImp.getUserName; 
 	    switch(username) {
 	    	case "" ://correct username
 	    		System.out.println("Welcome" + username);
-	    		BankUserDAOImpl.getPasword(scan);
+	    		
 	    	case "\\w+":
 	    		System.out.println("Incorrect Password. Please try again or contact Manager");
 	    }
