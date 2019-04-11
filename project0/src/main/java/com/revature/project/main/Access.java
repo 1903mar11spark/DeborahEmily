@@ -15,6 +15,7 @@ import com.revature.project.dao.AccountDAOImpl;
 //import com.revature.project.dao.BankUserDAO;
 import com.revature.project.dao.BankUserDAOImpl;
 import com.revature.project.dao.TransactionHistoryDAOImpl;
+import com.revature.project.exceptions.AccountNotFoundException;
 import com.revature.project.exceptions.UserNotFoundException;
 
 
@@ -35,13 +36,18 @@ public class Access {
 	public static void main(String[] args) throws UserNotFoundException, NumberFormatException, IOException {
 		BufferedReader sc = new BufferedReader(new InputStreamReader(System.in));
 		System.out.println("Please Enter Username and Password");
-		String username = sc.readLine();
+		//String username = sc.readLine();
 		int password = Integer.parseInt(sc.readLine());
-		if (!username.isEmpty() && password > 0) {
-		acd.getUserAccountsByLogin(username, password);
+		//if (!username.isEmpty() && password > 0) {
+		try {
+			acd.getAccountById(password);
+		} catch (AccountNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		}
 	}
-}	
+	
 //	public static void entry(BufferedReader sc) throws UserNotFoundException, NumberFormatException, IOException {
 //		Sections.firstSection();
 //		userEntry(sc);

@@ -1,5 +1,6 @@
 package com.revature.project.dao;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,7 +16,7 @@ import com.revature.project.util.ConnectionUtil;
 public class TransactionHistoryDAOImpl implements TransactionHistoryDAO {
 
 	@Override
-	public List<TransactionHistory> getTransactionHistory(int accountId) throws AccountNotFoundException{
+	public List<TransactionHistory> getTransactionHistory(int accountId) throws AccountNotFoundException {
 		List<TransactionHistory> history = new ArrayList<>();
 		try (Connection con = ConnectionUtil.getConnection()){
 			String sql = "SELECT T.TRASANCTION_ID, T.ACCOUNT_ID FROM TRANSACTION T WHERE T.ACCOUNT_ID = ?";
@@ -28,6 +29,9 @@ public class TransactionHistoryDAOImpl implements TransactionHistoryDAO {
 				
 			}
 		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
