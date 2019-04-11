@@ -5,7 +5,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,10 +38,11 @@ public class AccountDAOImpl implements AccountDAO {
 
 		return accounts;
 	}
-	//public Account get AccountById(int accountId){};
+	
+	
 	@Override
 	public Accounts getAccountById(int accountId) throws AccountNotFoundException{
-		Accounts account = null;
+		Accounts account = new Accounts();
 		try (Connection con = ConnectionUtil.getConnection()){
 			String sql = "SELECT A.ACCOUNT_ID, U.USER_ID, U.USERNAME, U.PASSWORD FROM ACCOUNTS A INNER JOIN BANK_USER U ON A.USER_ID = U.USER_ID WHERE A.ACCOUNT_ID = ?";
 			PreparedStatement pstmt = con.prepareStatement(sql);
@@ -64,7 +64,7 @@ public class AccountDAOImpl implements AccountDAO {
 		return account;
 		
 	}
-	@Override //return for a given user
+	@Override 
 	public List<Accounts> getUserAccountsByLogin(String username, int password) {
 		List<Accounts> accounts = new ArrayList<>();
 		try (Connection con = ConnectionUtil.getConnection()){
@@ -77,7 +77,7 @@ public class AccountDAOImpl implements AccountDAO {
 			while(rs.next()) {
 				int userId = rs.getInt("USER_ID");
 				String accountType = rs.getString("ACCOUNT_TYPE");
-				accounts.add(new Accounts(new BankUser(userId, username, password),accountType));
+				accounts.add(new Accounts(new BankUser(userId, username, password),accountType)); //quesstion
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -91,9 +91,9 @@ public class AccountDAOImpl implements AccountDAO {
 		try (Connection con = ConnectionUtil.getConnection()){
 			String sql = "INSERT INTO ACCOUNT (USER_ID, ACCOUNT_TYPE, ACCOUNT_BALANCE) VALUES (?, ?, ?)";
 			PreparedStatement pstmt = con.prepareStatement(sql);
-			pstmt.setInt(3, account.getUser().getUserId());
-			pstmt.setString(3, account.getAccountType());
-			pstmt.setDouble(4, account.getAccountBalance());
+			pstmt.setInt(1, account.getUser().getUserId());
+			pstmt.setString(2, account.getAccountType());
+			pstmt.setDouble(3, account.getAccountBalance());
 			pstmt.executeUpdate();
 			//account()
 		} catch (SQLException e) {
@@ -135,7 +135,7 @@ public class AccountDAOImpl implements AccountDAO {
 	public void updateAccountByDeposit(Accounts accounts, double deposit) {
 		if(deposit > 0 && deposit < 500) {
 			try (Connection con = ConnectionUtil.getConnection()){
-				String sql = "{call SP_DEPOSIT(?,?,?)}";
+				String sql = "{call SP_DEPOSIT(?,?,?)}";  
 				CallableStatement cs = con.prepareCall(sql);
 				cs.setInt(1, accounts.getAccountId());
 				cs.setDouble(2, deposit);
@@ -151,11 +151,11 @@ public class AccountDAOImpl implements AccountDAO {
 	}
 	
 	@Override
-	public double getCurrentBalance(Accounts account) {
+	public double getCurrentBalance(int accountId) throws AccountNotFoundException {  
 		double accountBalance = 0;
 		try(Connection con = ConnectionUtil.getConnection()){
-			String sql = "SELECT ACCOUNT_BALANCE FROM ACCOUNTS ";
-			Statement stmt = con.createStatement();
+			String sql = "SELECT ACCOUNT_BALANCE FROM ACCOUNTS WHERE ACCOUNT_ID=?";
+			PreparedStatement stmt = con.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			accountBalance = rs.getDouble("ACCOUNT_BALANCE");
 		} catch (SQLException e) {
@@ -163,6 +163,5 @@ public class AccountDAOImpl implements AccountDAO {
 		}
 		return accountBalance;
 	}
-	
 }
 

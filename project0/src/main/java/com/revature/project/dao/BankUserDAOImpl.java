@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -38,7 +37,7 @@ public class BankUserDAOImpl implements BankUserDAO{
 	public int getPassword(String username) {
 		int password = 0;
 		try (Connection con = ConnectionUtil.getConnection()){
-			String sql = "SELECT USER_ID,USERNAME, USERPASSWORD FROM BANK_USER USER=?";
+			String sql = "SELECT USER_ID, USERNAME, USERPASSWORD FROM BANK_USER WHERE USERNAME=?";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(2, username);
 			ResultSet rs = pstmt.executeQuery();
@@ -65,29 +64,6 @@ public class BankUserDAOImpl implements BankUserDAO{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}
-
-	@Override
-	public List<Accounts> getAccountId(int userId) throws UserNotFoundException{
-		List<Accounts> accounts = new ArrayList<>();
-		try (Connection con = ConnectionUtil.getConnection()){
-			String sql = "SELECT A.ACCOUNT_ID, U.USER_ID, U.USERNAME, U.USERPASSWORD, A.ACCOUNT_TYPE "
-					+ "FROM ACCOUNT A INNER JOIN BANK_USER U ON A.USER_ID = U.USER_ID";
-			PreparedStatement pstmt = con.prepareStatement(sql);
-			ResultSet rs = pstmt.executeQuery(sql);
-			while (rs.next()) {
-				userId = rs.getInt("USER_ID");
-				String username = rs.getString("USERNAME");
-				int password = rs.getInt("PASSWORD");
-				String accountType = rs.getString("ACCOUNT_TYPE");
-
-				accounts.add(new Accounts(new BankUser(userId, username, password), accountType));
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return accounts;
 	}
 
 
@@ -118,6 +94,12 @@ public class BankUserDAOImpl implements BankUserDAO{
 			e.printStackTrace();
 		}
 		return us;
+	}
+
+	@Override
+	public List<Accounts> getAccountId(int userId) throws UserNotFoundException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
