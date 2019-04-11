@@ -214,6 +214,8 @@ public class Access {
 	
 	
 	//Manager Methods
+	
+	//getUserAccountsByLogin --Gets account 
 	   
 	private static void managerLogin() {
 		System.out.println("Please Enter Username");
@@ -324,5 +326,6 @@ public class Access {
 		}
 		
 	}
+	
 	
 }
