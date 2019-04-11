@@ -3,7 +3,6 @@ package com.revature.project.main;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-
 import com.revature.project.util.ConnectionUtil;
 
 
@@ -19,8 +18,8 @@ public class Driver {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-	//possible call back to access
 		
+
 		}
 
 }

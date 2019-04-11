@@ -103,6 +103,22 @@ public class BankUserDAOImpl implements BankUserDAO{
 			e.printStackTrace();
 		}
 	}
-	//UPDATE USERPASSWORD
+	
+	@Override
+	public BankUser getUsername(String username) {
+		BankUser us = new BankUser();
+		String sql = "SELECT USERNAME FROM BANK_USER WHERE USER_NAME = ?";
+		try (Connection con = ConnectionUtil.getConnection()){
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(2, username);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				us.setUsername(rs.getString("USERNAME"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return us;
+	}
 
 }
