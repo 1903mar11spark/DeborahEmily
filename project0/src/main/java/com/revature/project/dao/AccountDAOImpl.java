@@ -1,5 +1,6 @@
 package com.revature.project.dao;
 
+import java.io.IOException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,6 +16,7 @@ import com.revature.project.exceptions.*;
 
 public class AccountDAOImpl implements AccountDAO {
 
+	public static String x = "/Users/Em/Desktop/Pro0/DeborahEmily/project0/target/classes/com/revature/project/main/Connections.properties";
 
 	@Override //return for superuser
 	public List<Accounts> getAccounts() {
@@ -41,10 +43,14 @@ public class AccountDAOImpl implements AccountDAO {
 	
 	
 	@Override
-	public Accounts getAccountById(int accountId) throws AccountNotFoundException{
+	public Accounts getAccountById(int accountId) throws AccountNotFoundException, IOException{
 		Accounts account = new Accounts();
-		try (Connection con = ConnectionUtil.getConnection()){
-			String sql = "SELECT A.ACCOUNT_ID, U.USER_ID, U.USERNAME, U.PASSWORD FROM ACCOUNTS A INNER JOIN BANK_USER U ON A.USER_ID = U.USER_ID WHERE A.ACCOUNT_ID = ?";
+		try (Connection con = ConnectionUtil.getConnectionFromFile(x)){
+			String sql = "SELECT A.ACCOUNT_ID, U.USER_ID, U.USERNAME, U.USERPASSWORD " + 
+					"FROM ACCOUNTS A " + 
+					"INNER JOIN BANK_USER U " + 
+					"ON A.USER_ID = U.USER_ID " + 
+					"WHERE A.ACCOUNT_ID =?; ";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery(sql);
 			while(rs.next()) {
@@ -65,19 +71,23 @@ public class AccountDAOImpl implements AccountDAO {
 		
 	}
 	@Override 
-	public List<Accounts> getUserAccountsByLogin(String username, int password) {
+	public List<Accounts> getUserAccountsByLogin(String username, int password) throws IOException {
 		List<Accounts> accounts = new ArrayList<>();
-		try (Connection con = ConnectionUtil.getConnection()){
-			String sql = "SELECT A.ACCOUNTS_ID, A.ACCOUNTS_TYPES, A.ACCOUNT_BALANCE, U.USER_ID, FROM ACCOUNTS A"
-					+ "INNER JOIN BANK_USER U ON A.USER_ID = U.USER_ID WHERE U.USERNAME=? AND U.USERPASSWORD=?";
+		try (Connection con = ConnectionUtil.getConnectionFromFile(x);){
+			String sql = "SELECT A.ACCOUNT_ID, A.ACCOUNTS_TYPE, U.USER_ID " + 
+					"FROM ACCOUNTS A " + 
+					"INNER JOIN BANK_USER U " + 
+					"ON A.USER_ID = U.USER_ID " + 
+					"WHERE U.USERNAME=? "+//AND U.USERPASSWORD=? " + 
+					"ORDER BY A.ACCOUNT_ID;";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1,  username);
-			pstmt.setInt(2, password);
+			//pstmt.setInt(2, password);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()) {
 				int userId = rs.getInt("USER_ID");
-				String accountType = rs.getString("ACCOUNT_TYPE");
-				accounts.add(new Accounts(new BankUser(userId, username, password),accountType)); //quesstion
+				String accountType = rs.getString("ACCOUNTS_TYPE");
+				accounts.add(new Accounts(new BankUser(userId, username, password),accountType));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
