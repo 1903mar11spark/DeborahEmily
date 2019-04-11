@@ -16,7 +16,7 @@ public interface AccountDAO {
 	public void updateAccountByWithdraw(Accounts accounts, double withdraw);
 	public void updateAccountByDeposit(Accounts accounts, double withdraw);
 	public void deleteAccount(Accounts account);
-	public double getCurrentBalance(Accounts account);
+	double getCurrentBalance(int accountId) throws AccountNotFoundException;
 	
 	
 	

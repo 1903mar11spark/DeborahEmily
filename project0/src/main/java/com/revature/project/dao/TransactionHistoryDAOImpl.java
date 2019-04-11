@@ -34,14 +34,16 @@ public class TransactionHistoryDAOImpl implements TransactionHistoryDAO {
 	}
 
 	@Override
-	public double updateBalanceWithdraw(double withdraw) {//callable
-		// TODO Auto-generated method stub
+	public double updateBalanceWithdraw(double withdraw) {
+		//callable
+		
 		return 0;
 	}
 
 	@Override
-	public double updateBalanceDeposit(double deposit) {//callable
-		// TODO Auto-generated method stub
+	public double updateBalanceDeposit(double deposit) {
+		//callable
+		
 		return 0;
 	}
 
