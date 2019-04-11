@@ -9,7 +9,6 @@ public class Accounts  {
 	public Accounts(BankUser user, String accountType) {
 		super();
 		this.user = user;
-		this.accountId = accountId;
 		this.accountType = accountType;
 	}
 	
