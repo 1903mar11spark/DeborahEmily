@@ -1,22 +1,36 @@
 package com.revature.project.project0;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
+
+
 import com.revature.project.*;
+import com.revature.project.dao.BankUserDAOImpl;
+import com.revature.project.main.Access;
 
 public class Tests {
 
+	private static final Access accessTest = new Access();
+	private static final BankUserDAOImpl budTest = new BankUserDAOImpl();
+	
 	@Test
-	public void testGetUsername() {
-		assertEquals("user", warehouse.fetchUser("admin").getUsername());
+	public void testGetBalance() {
+		
+		assertFalse("", accessTest.("admin"));
 	}
 	
 	@Test
-	public void testGetPassword() {
-		assertEquals("employee", warehouse.fetchUser("employee").getPassword());
+	public void testGetUsername() {
+		assertEquals("employee", accessTest.getPassword());
 	}
 	
 	@Test
 	public void test() {
-		assertTrue("admin", warehouse.fetchUser("admin").getUsername());
+		assertFalse();
+	}
+	
+	public void testAnEmptyString() {
+		assertEquals("", evaluationService.reverse(""));
 	}
 }
