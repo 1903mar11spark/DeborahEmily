@@ -59,14 +59,15 @@ public class Access {
 	//User Methods
 	public static void userLogin() {
 		System.out.println("Please Enter Username");
-		String username = scan.nextLine();
+		String username = scan.nextLine()
+		String user = username.replaceAll("\\W+", "");
 		System.out.println("Please Enter Password");
-		String password = scan.nextline();
-		String pass = password.replaceAll("\\W+", "");
-		if (!(username.isEmpty() | pass.isEmpty())) {
-			BankUser confirmUser = bud.getUsername(username);
+		int password = scan.nextInt();
+		
+		if (!(user.isEmpty() | password.notNull())) {
+			BankUser confirmUser = bud.getUsername(user);
 				if (confirmUser.getUserId() != 0) {
-					if (confirmUser.getPassword() == pass) {
+					if (confirmUser.getPassword() == password) {
 						System.out.println("Password was correct");
 						userMainMenu(confirmUser);
 					} else {
@@ -245,7 +246,7 @@ public class Access {
 		int txt = scan.nextInt();
 	    switch (txt) {
 	    case 1: //view user
-	    	System.out.println("You have selected to View User Information");
+	    	System.out.println("You have selected to View All User Information");
 	    	viewUserInfo();
 	    	break;
 	    case 2: //create user
@@ -272,53 +273,9 @@ public class Access {
 	// Manager Selected Methods
 	
 	private static void viewUserInfo() {
-		System.out.println("1. View All Users  or 2. Select User to View");
-		int choice = scan.nextInt();
-		if(choice == 1) { //get all
-			
-		} else if (choice == 2) {
-			System.out.println("Please Enter User ID");
-			String userToView = scan.nextLine();
-			
-			//get individual
-			
-		}
-		
-		
-		
+		bud.getAllUsers();
 	}
 	
-	private static void deleteExistingUser() {
-		System.out.println("Please Enter User ID");
-		String userId = scan.nextLine();
-		System.out.println("*******ARE YOU SURE YOU WANT TO DELETE THIS USER*******");
-		System.out.println("*********************"+userId+"************************");
-		System.out.println("***************  1. YES       2. NO  ******************");
-		int yn = scan.nextInt();
-		if (yn == 1) { //intiate delete call to BankUser delete
-			
-		}else {
-			managerMainMenu(null);//------------------------------------------verification param
-		}
-		
-	}
-
-	
-	private static void updateExistingUser() {//------------------------------need to create an update method
-		System.out.println("Please Enter User ID");
-		String userId = scan.nextLine();
-		System.out.println("*******ARE YOU SURE YOU WANT TO UPDATE THIS USER*******");
-		System.out.println("*********************"+userId+"************************");
-		System.out.println("***************  1. YES       2. NO  ******************");
-		int yn = scan.nextInt();
-		if (yn == 1) { //intiate delete call to update username/password etc
-			
-		}else {
-			managerMainMenu(null);//------------------------------------------verification param
-		}
-		
-	}
-
 	private static void createNewUser() {
 		System.out.println("Please Enter New Username For User");
 		String newUser = scan.nextLine();
@@ -335,9 +292,37 @@ public class Access {
 			managerMainMenu(null);//------------------------------------------verification param
 		}
 		
+	}
+	
+	private static void updateExistingUser() {//------------------------------need to create an update method
+		System.out.println("Please Enter User ID");
+		String userId = scan.nextLine();
+		System.out.println("*******ARE YOU SURE YOU WANT TO UPDATE THIS USER*******");
+		System.out.println("*********************"+userId+"************************");
+		System.out.println("***************  1. YES       2. NO  ******************");
+		int yn = scan.nextInt();
+		if (yn == 1) { //intiate delete call to update username/password etc
+			
+		}else {
+			managerMainMenu(null);//------------------------------------------verification param
+		}
 		
 	}
-
-
+	
+	private static void deleteExistingUser() {
+		System.out.println("Please Enter User ID");
+		String userId = scan.nextLine();
+		System.out.println("*******ARE YOU SURE YOU WANT TO DELETE THIS USER*******");
+		System.out.println("*********************"+userId+"************************");
+		System.out.println("***************  1. YES       2. NO  ******************");
+		int yn = scan.nextInt();
+		if (yn == 1) { 
+			BankUser deleteUser = bud.get(u);
+			
+		}else {
+			managerMainMenu(null);//------------------------------------------verification param
+		}
+		
+	}
 	
 }

@@ -14,6 +14,6 @@ public interface BankUserDAO {
 	public void createUser(String username, int password);
 	public List<Accounts> getAccountId(int userId) throws UserNotFoundException;
 	public void deleteUser(int userId) throws UserNotFoundException;
-	public BankUser getUsername(String username);
+	public BankUser getUsername(String username) throws UserNotFoundException;
 
 }

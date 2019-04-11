@@ -22,7 +22,7 @@ public class Tests {
 	
 	@Test
 	public void testGetUsername() {
-		assertEquals("employee", accessTest.getPassword());
+		assertEquals("", accessTest.getPassword());
 	}
 	
 	@Test

@@ -54,7 +54,7 @@ public class BankUserDAOImpl implements BankUserDAO{
 
 	@Override
 	public void createUser(String username, int password) {
-		BankUser user = null;
+		BankUser user = new BankUser();
 		try (Connection con = ConnectionUtil.getConnection()){
 			String sql = "INSERT INTO BankUser VALUES (?,?,?)";
 			PreparedStatement pstmt = con.prepareStatement(sql);
@@ -76,7 +76,6 @@ public class BankUserDAOImpl implements BankUserDAO{
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery(sql);
 			while (rs.next()) {
-				int accountId = rs.getInt("ACCOUNT_ID");
 				userId = rs.getInt("USER_ID");
 				String username = rs.getString("USERNAME");
 				int password = rs.getInt("PASSWORD");
@@ -105,7 +104,7 @@ public class BankUserDAOImpl implements BankUserDAO{
 	}
 	
 	@Override
-	public BankUser getUsername(String username) {
+	public BankUser getUsername(String username) throws UserNotFoundException {
 		BankUser us = new BankUser();
 		String sql = "SELECT USERNAME FROM BANK_USER WHERE USER_NAME = ?";
 		try (Connection con = ConnectionUtil.getConnection()){
