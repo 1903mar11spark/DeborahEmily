@@ -29,7 +29,7 @@ public class Sections {
 			System.out.println("        *                                                 *");
 			System.out.println("        *                    MAIN MENU                    *");
 			System.out.println("        *                                                 *");
-			System.out.println("        *         1. ACCOUNT BALANCES			          *");
+			System.out.println("        *         1. ACCOUNT BALANCES			   *");
 			System.out.println("        *    	  2. MANAGE SAVINGS ACCOUNT            	  *");
 			System.out.println("        *    	  3. MANAGE CHECKING ACCOUNT              *");
 			System.out.println("        *     	  4. CREATE NEW ACCOUNT                   *");
@@ -107,10 +107,11 @@ public class Sections {
 			System.out.println("        *                  MANAGER MENU                   *");
 			System.out.println("        *                                                 *");
 			System.out.println("        *    	  1. VIEW USER INFORMATION             	  *");
-			System.out.println("        *    	  2. CREATE USER                          *");
-			System.out.println("        *     	  3. UPDATE USER                          *");
-			System.out.println("        *         4. DELETE USER                          *");
-			System.out.println("        *         5. EXIT BANKING APPLICATION             *");
+			System.out.println("        *         2. VIEW ACCOUNT INFORMATION             *");
+			System.out.println("        *    	  3. CREATE USER                          *");
+			System.out.println("        *     	  4. UPDATE USER                          *");
+			System.out.println("        *         5. DELETE USER                          *");
+			System.out.println("        *         6. EXIT BANKING APPLICATION             *");
 			System.out.println("        *                                                 *");
 			System.out.println("        *-------------------------------------------------*");
 			System.out.println("                     PLEASE INPUT A NUMBER");  	
