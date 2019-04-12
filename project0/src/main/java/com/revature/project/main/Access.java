@@ -4,20 +4,13 @@ package com.revature.project.main;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-//import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-//import java.io.InputStreamReader;
 import java.util.Scanner;
-
-import com.revature.project.beans.Accounts;
-
-//import javax.swing.BorderFactory;
-//import javax.swing.JPanel;
 
 import com.revature.project.beans.Accounts;
 import com.revature.project.beans.BankUser;
@@ -25,6 +18,7 @@ import com.revature.project.dao.AccountDAOImpl;
 import com.revature.project.dao.BankUserDAO;
 import com.revature.project.dao.BankUserDAOImpl;
 import com.revature.project.dao.TransactionHistoryDAOImpl;
+import com.revature.project.exceptions.AccountNotFoundException;
 import com.revature.project.exceptions.UserNotFoundException;
 
 
@@ -90,11 +84,19 @@ public class Access {
 	    switch (txt) {
 	    case 1://go to savings account
 	    	System.out.println("You have selected Savings Account");
-	    	//goToSavings(scan);
+	    	try {
+				goToSavings(scan);
+			} catch (AccountNotFoundException e1) {
+				e1.printStackTrace();
+			}
 	    	break;
 	    case 2://go to checking account
 	    	System.out.println("You have selected Checking Account");
-	    	//goToChecking(scan);
+	    	try {
+				goToChecking(scan);
+			} catch (AccountNotFoundException e) {
+				e.printStackTrace();
+			}
 	    	break;
 	    case 3://make a new account
 	    	System.out.println("You have selected to make a New Account");
@@ -129,76 +131,128 @@ public class Access {
     	}  	
 	}
 	
-//	private static void goToSavings(BufferedReader scan) {
-//		Sections.fourthSection();
-//		
-//		System.out.println("YOUR CURRENT BALANCE IS: "+balance);//need to write code for balance
-//		int txt = scan.nextInt();
-//	    switch (txt) {
-//	    case 1://deposit
-//	    	System.out.println("You have selected to Make a Deposit");
-//	    	goToSavings();
-//	    	break;
-//	    case 2://withdraw
-//	    	System.out.println("You have selected to Make a Withdrawl");
-//	    	goToChecking();
-//	    	break;
-//	    case 3://transaction history
-//	    	System.out.println("You have selected to Review Transaction History");
-//	    	createAccount();
-//	    	break;
-//	    case 4: //close account
-//	    	System.out.println("You have selected to Close an Account");
-//	    	break;
-//	    case 5://main menu
-//	    	System.out.println("You have selected to Return to Main Menu");
-//	    	userMainMenu(null); //-----------------------------------------------need to redirect with actual param
-//	    	break;
-//	    case 6://exit 
-//	    	System.out.println("You have selected to Exit the Application. Goodbye!");
-//	    	break;
-//	    default:
-//	    	System.out.println("Please select a number 1 through 4");
-//	    }
-//		
-//	}
+	private static void goToSavings(BufferedReader scan) throws NumberFormatException, IOException, AccountNotFoundException {
+		System.out.println("Enter your account Id ");
+		int accountId = Integer.parseInt(scan.readLine());
+		double balance = acd.getCurrentBalance(accountId);
+		System.out.println("YOUR CURRENT BALANCE IS: "+balance);
+		
+		Sections.fourthSection();
+		int action = Integer.parseInt(scan.readLine());
+	    switch (action) {
+	    case 1://deposit
+	    	System.out.println("How much would you like to deposit?");
+	    	double deposit = Double.parseDouble(scan.readLine());
+	    	acd.updateAccountByDeposit(accountId, deposit);
+	    	System.out.println(balance);
+	    	userMainMenu(scan);
+	    	break;
+	    case 2://withdraw
+	    	System.out.println("How much would you like to Withdrawl");
+	    	double withdraw = Double.parseDouble(scan.readLine());
+	    	acd.updateAccountByWithdraw(accountId, withdraw);
+	    	System.out.println(balance);
+	    	userMainMenu(scan);
+	    	break;
+	    case 3://transaction history
+	    	System.out.println("You have selected to Review Transaction History");
+	    	thd.getTransactionHistory(accountId);
+	    	userMainMenu(scan);
+	    	break;
+	    case 4: //close account
+	    	System.out.println("You have selected to Close an Account");
+	    	if(acd.getCurrentBalance(accountId)==0) {
+	    		acd.deleteAccount(accountId);
+	    	}else if (acd.getCurrentBalance(accountId)>0) {
+	    		System.out.println("Cannot close an account with a balance of " + balance + ". Please make a withdraw.");
+	    		goToSavings(scan);
+	    		
+	    	}else {
+	    		System.out.println("Cannot close an account with a balance of " + balance + ". Please make a depoist.");
+	    		goToSavings(scan);
+	    	}
+	    	
+	    	break;
+	    case 5://main menu
+	    	System.out.println("You have selected to Return to Main Menu");
+	    	userMainMenu(scan); //-----------------------------------------------need to redirect with actual param
+	    	break;
+	    case 6://exit 
+	    	System.out.println("You have selected to Exit the Application. Goodbye!");
+	    	scan.close();
+	    	break;
+	    default:
+	    	System.out.println("Please select a number 1 through 4");
+	    }
+		
+	}
 	
-//	private static void goToChecking(BufferedReader scan) {
-//		Sections.fifthSection();
-//		balance = get
-//				
-//		System.out.println("YOUR CURRENT BALANCE IS: "+balance);//need to write code for balance
-//		int txt = scan.nextInt();
-//	    switch (txt) {
-//	    case 1://deposit
-//	    	System.out.println("You have selected to Make a Deposit");
-//	    	goToSavings();
-//	    	break;
-//	    case 2://withdraw
-//	    	System.out.println("You have selected to Make a Withdrawl");
-//	    	goToChecking();
-//	    	break;
-//	    case 3://transaction history
-//	    	System.out.println("You have selected to Review Transaction History");
-//	    	createAccount();
-//	    	break;
-//	    case 4: //close account
-//	    	System.out.println("You have selected to Close an Account");
-//	    	break;
-//	    case 5://main menu
-//	    	System.out.println("You have selected to Return to Main Menu");
-//	    	userMainMenu(null); //-----------------------------------------------need to redirect with actual param
-//	    	break;
-//	    case 6://exit 
-//	    	System.out.println("You have selected to Exit the Application. Goodbye!");
-//	    	break;
-//	    default:
-//	    	System.out.println("Please select a number 1 through 4");
-//	    }
-//	}
-	//Manager Methods
+	private static void goToChecking(BufferedReader scan) throws AccountNotFoundException, NumberFormatException, IOException {
+		System.out.println("Enter your account Id ");
+		int accountId = Integer.parseInt(scan.readLine());
+		double balance = acd.getCurrentBalance(accountId);
+		System.out.println("YOUR CURRENT BALANCE IS: "+balance);
+		Sections.fifthSection();
+		int txt = Integer.parseInt(scan.readLine());
+	    switch (txt) {
+	    case 1://deposit
+	    	System.out.println("How much would you like to deposit?");
+	    	double deposit = Double.parseDouble(scan.readLine());
+	    	acd.updateAccountByDeposit(accountId, deposit);
+	    	System.out.println(balance);
+	    	userMainMenu(scan);
+	    	break;
+	    case 2://withdraw
+	    	System.out.println("How much would you like to Withdrawl");
+	    	double withdraw = Double.parseDouble(scan.readLine());
+	    	acd.updateAccountByWithdraw(accountId, withdraw);
+	    	System.out.println(balance);
+	    	userMainMenu(scan);
+	    	break;
+	    case 3://transaction history
+	    	System.out.println("You have selected to Review Transaction History");
+	    	thd.getTransactionHistory(accountId);
+	    	userMainMenu(scan);
+	    	break;
+	    case 4: //close account
+	    	System.out.println("You have selected to Close an Account");
+	    	System.out.println("*******ARE YOU SURE YOU WANT TO DELETE THIS USER*******");
+			System.out.println("*********************"+accountId+"************************");
+			System.out.println("***************  1. YES       2. NO  ******************");
+			int respons = Integer.parseInt(scan.readLine());
+			if(respons == 1) {
+				if(acd.getCurrentBalance(accountId)==0) {
+					acd.deleteAccount(accountId);
+					System.out.println("ACCOUNT HAS BEEN DELETED");
+					userMainMenu(scan);
+				}else if (acd.getCurrentBalance(accountId)>0) {
+					System.out.println("Cannot close an account with a balance of " + balance + ". Please make a withdraw.");
+					goToChecking(scan);
+				}else {
+					System.out.println("Cannot close an account with a balance of " + balance + ". Please make a depoist.");
+					goToChecking(scan);
+				}
+			}if(respons == 2) {
+				userMainMenu(scan);
+			}else {
+				System.out.println("Please enter in a valid respons");
+			}
+	    	break;
+	    case 5://main menu
+	    	System.out.println("You have selected to Return to Main Menu");
+	    	userMainMenu(null); //-----------------------------------------------need to redirect with actual param
+	    	break;
+	    case 6://exit 
+	    	System.out.println("You have selected to Exit the Application. Goodbye!");
+	    	scan.close();
+	    	break;
+	    default:
+	    	System.out.println("Please select a number 1 through 4");
+	    }
+	}
 	
-//getUserAccountsByLogin --Gets account 
+	
+//Manager Methods
   
 	private static void managerLogin(BufferedReader scan) throws IOException {
 		System.out.println("Please Enter Manager Username");
@@ -230,8 +284,7 @@ public class Access {
 						e.printStackTrace();
 					}
 		    	  }
-		      }
-				  
+		      }	  
 	}
 	
 	
@@ -292,7 +345,7 @@ public class Access {
 	    	break;
 	    case 4: //update user
 	    	System.out.println("You have selected to Update an Existing User");
-	    	//updateExistingUser();
+	    	updateExistingUser(scan);
 	    	break;
 	    case 5://delete user
 	    	System.out.println("You have selected to Delete an Existing User");
@@ -327,6 +380,29 @@ public class Access {
 	    	System.out.println("Please select select a number 1 through 5");
 	    }
 	    
+	}
+	
+	private static void updateExistingUser(BufferedReader scan) throws NumberFormatException, IOException {
+		System.out.println("Please Enter User ID");
+		int userId = Integer.parseInt(scan.readLine());
+		System.out.println("*******ARE YOU SURE YOU WANT TO UPDATE THIS USER*******");
+		System.out.println("*********************"+userId+"************************");
+		System.out.println("***************  1. YES       2. NO  ******************");
+		int yn = Integer.parseInt(scan.readLine());;
+		if (yn == 1) { //intiate delete call to update username/password etc
+			System.out.println("Enter the username ");
+			String username = scan.readLine();
+			System.out.println("Enter the current password ");
+			int currPass = Integer.parseInt(scan.readLine());
+			System.out.println("Ente the new password ");
+			int newPass = Integer.parseInt(scan.readLine());
+			BankUser bu = new BankUser(username, currPass);
+			bud.updateUser(bu, newPass);
+			System.out.println(bud.getUserByLogin(username, newPass));
+		}else {
+			managerMainMenu(null);
+		}
+		
 	}
 
 }

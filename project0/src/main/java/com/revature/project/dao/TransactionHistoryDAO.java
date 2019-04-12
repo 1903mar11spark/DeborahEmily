@@ -7,9 +7,12 @@ import com.revature.project.exceptions.AccountNotFoundException;
 
 public interface TransactionHistoryDAO {
 	
-	public List<TransactionHistory> getTransactionHistory(int accountId) throws AccountNotFoundException;
-	public double updateBalanceWithdraw(double withdraw);
-	public double updateBalanceDeposit(double deposit);
+	
+	void updateBalanceDeposit(int accountId, double deposit);
+
+	List<TransactionHistory> getTransactionHistory(int accountId) throws AccountNotFoundException;
+
+	void updateBalanceWithdraw(int accountId, double withdraw);
 
 
 }
