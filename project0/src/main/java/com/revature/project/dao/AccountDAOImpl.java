@@ -1,11 +1,14 @@
 package com.revature.project.dao;
 
+
 import java.io.IOException;
-import java.sql.CallableStatement;
+//import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+//import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,160 +21,217 @@ public class AccountDAOImpl implements AccountDAO {
 
 	public static String x = "/Users/Em/Desktop/Pro0/DeborahEmily/project0/target/classes/com/revature/project/main/Connections.properties";
 
-	@Override //return for superuser
-	public List<Accounts> getAccounts() {
-		List<Accounts> accounts = new ArrayList<>();
-		try (Connection con = ConnectionUtil.getConnection()){
-			String sql = "SELECT A.ACCOUNT_ID, A.ACCOUNT_TYPES, A.ACCOUNT_BALANCE, U.USER_ID,U.USERNAME,U.USERPASSWORD FROM ACCOUNTS A"
-					+ "INNER JOIN BANK_USER U ON A.USER_ID = U.USER_ID";
-			PreparedStatement pstmt = con.prepareStatement(sql);
-			ResultSet rs = pstmt.executeQuery(sql);
-			while(rs.next()) {
-				int userId = rs.getInt("USER_ID");
-				String username = rs.getString("USERNAME");
-				int password = rs.getInt("USERPASSWORD");
-				String accountType = rs.getString("ACCOUNT_TYPE");
-				accounts.add(new Accounts(new BankUser(userId, username, password), accountType));
-			}
+//	@Override //return for superuser
+//	public List<Accounts> getAccounts() {
+//		List<Accounts> accounts = new ArrayList<>();
+//		try (Connection con = ConnectionUtil.getConnection()){
+//			String sql = "SELECT A.ACCOUNT_ID, A.ACCOUNT_TYPES, A.ACCOUNT_BALANCE, U.USER_ID,U.USERNAME,U.USERPASSWORD FROM ACCOUNTS A"
+//					+ "INNER JOIN BANK_USER U ON A.USER_ID = U.USER_ID";
+//			PreparedStatement pstmt = con.prepareStatement(sql);
+//			ResultSet rs = pstmt.executeQuery(sql);
+//			while(rs.next()) {
+//				int userId = rs.getInt("USER_ID");
+//				String username = rs.getString("USERNAME");
+//				int password = rs.getInt("USERPASSWORD");
+//				String accountType = rs.getString("ACCOUNT_TYPE");
+//				accounts.add(new Accounts(new BankUser(userId, username, password), accountType));
+//			}
+//
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		} 
+//
+//		return accounts;
+//	}
+//	
+//		
+//	}
+//	@Override //NEEDS REMEDIED
+//	public List<Accounts> getUserAccountsByLogin(String username, int password) throws IOException {
+//		List<Accounts> accounts = new ArrayList<>();
+//		try (Connection con = ConnectionUtil.getConnectionFromFile(x);){
+//			String sql = "SELECT A.ACCOUNT_ID, A.ACCOUNTS_TYPE, U.USER_ID " + 
+//					"FROM ACCOUNTS A " + 
+//					"INNER JOIN BANK_USER U " + 
+//					"ON A.USER_ID = U.USER_ID " + 
+//					"WHERE U.USERNAME=? "+//AND U.USERPASSWORD=? " + 
+//					"ORDER BY A.ACCOUNT_ID;";
+//			PreparedStatement pstmt = con.prepareStatement(sql);
+//			pstmt.setString(1,  username);
+//			//pstmt.setInt(2, password);
+//			ResultSet rs = pstmt.executeQuery();
+//			while(rs.next()) {
+//				int userId = rs.getInt("USER_ID");
+//				String accountType = rs.getString("ACCOUNTS_TYPE");
+//				accounts.add(new Accounts(new BankUser(userId, username, password),accountType));
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return accounts;
+//	}
+//	//fix here
+//	@Override
+//	public void createAccount(BankUser user) {
+//		Accounts account = new Accounts();
+//		try (Connection con = ConnectionUtil.getConnection()){
+//			String sql = "INSERT INTO ACCOUNT (USER_ID, ACCOUNT_TYPE, ACCOUNT_BALANCE) VALUES (?, ?, ?)";
+//			PreparedStatement pstmt = con.prepareStatement(sql);
+//			pstmt.setInt(1, account.getUser().getUserId());
+//			pstmt.setString(2, account.getAccountType());
+//			pstmt.setDouble(3, account.getAccountBalance());
+//			pstmt.executeUpdate();
+//			//account()
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//	}
+//	@Override
+//	public void deleteAccount(Accounts account) {
+//		try (Connection con = ConnectionUtil.getConnection()){
+//			String sql = "DELETE FROM ACCOUNT WHERE ACCOUNT_ID = ?";
+//			PreparedStatement pstmt = con.prepareStatement(sql);
+//			pstmt.setInt(1, account.getAccountId());
+//			pstmt.executeUpdate();
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//	}
+//	@Override
+//	public void updateAccountByWithdraw(Accounts accounts, double withdraw) throws OverdraftException{
+//		if(withdraw > 0) {
+//			try (Connection con = ConnectionUtil.getConnection()){
+//				String sql = "{call SP_WITHDRAW(?,?,?)}";
+//				CallableStatement cs = con.prepareCall(sql);
+//				cs.setInt(1, accounts.getAccountId());
+//				cs.setDouble(2, withdraw);
+//				cs.registerOutParameter(3, java.sql.Types.DECIMAL);
+//				cs.execute();
+//				accounts.setAccountBalance(accounts.getAccountBalance() - cs.getDouble(3)); 				
+//			}catch (SQLException e) {
+//				e.printStackTrace();
+//			}
+//		}else {
+//			System.out.println("Please enter a positve number. ");
+//			//If withdraw is greater than currentBalance
+//		}
+//	}
+//	
+//	@Override
+//	public void updateAccountByDeposit(Accounts accounts, double deposit) {
+//		if(deposit > 0 && deposit < 500) {
+//			try (Connection con = ConnectionUtil.getConnection()){
+//				String sql = "{call SP_DEPOSIT(?,?,?)}";  
+//				CallableStatement cs = con.prepareCall(sql);
+//				cs.setInt(1, accounts.getAccountId());
+//				cs.setDouble(2, deposit);
+//				cs.registerOutParameter(3, java.sql.Types.DECIMAL);
+//				cs.execute();
+//				accounts.setAccountBalance(accounts.getAccountBalance() + cs.getDouble(3)); 			
+//			}catch (SQLException e) {
+//				e.printStackTrace();
+//			}		
+//		}else {
+//			System.out.println("Please enter a number greater than 0 or less than 500.");
+//		}
+//	}
+//	
+//	@Override
+//	public double getCurrentBalance(int accountId) throws AccountNotFoundException {  
+//		double accountBalance = 0;
+//		try(Connection con = ConnectionUtil.getConnection()){
+//			String sql = "SELECT ACCOUNT_BALANCE FROM ACCOUNTS WHERE ACCOUNT_ID=?";
+//			PreparedStatement stmt = con.prepareStatement(sql);
+//			ResultSet rs = stmt.executeQuery(sql);
+//			accountBalance = rs.getDouble("ACCOUNT_BALANCE");
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return accountBalance;
+//	}
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} 
 
-		return accounts;
-	}
-	
-	
 	@Override
-	public Accounts getAccountById(int accountId) throws AccountNotFoundException, IOException{
-		Accounts account = new Accounts();
-		try (Connection con = ConnectionUtil.getConnectionFromFile(x)){
-			String sql = "SELECT A.ACCOUNT_ID, U.USER_ID, U.USERNAME, U.USERPASSWORD " + 
-					"FROM ACCOUNTS A " + 
-					"INNER JOIN BANK_USER U " + 
-					"ON A.USER_ID = U.USER_ID " + 
-					"WHERE A.ACCOUNT_ID =?; ";
-			PreparedStatement pstmt = con.prepareStatement(sql);
-			ResultSet rs = pstmt.executeQuery(sql);
-			while(rs.next()) {
-				int userId = rs.getInt("USER_ID");
-				String username = rs.getString("USERNAME");
-				int password = rs.getInt("USERPASSWORD");
-				accountId = rs.getInt("ACCOUNT_ID");
-				String accountType = rs.getString("ACCOUNT_TYPE");
-				//double accountBalance = rs.getDouble("ACCOUNT_BALANCE");
-				account = new Accounts(new BankUser(userId, username, password), accountType);
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} 
-
-		return account;
+	public void createAccount(Accounts account) {
+		// TODO Auto-generated method stub
 		
 	}
-	@Override 
-	public List<Accounts> getUserAccountsByLogin(String username, int password) throws IOException {
-		List<Accounts> accounts = new ArrayList<>();
-		try (Connection con = ConnectionUtil.getConnectionFromFile(x);){
-			String sql = "SELECT A.ACCOUNT_ID, A.ACCOUNTS_TYPE, U.USER_ID " + 
-					"FROM ACCOUNTS A " + 
-					"INNER JOIN BANK_USER U " + 
-					"ON A.USER_ID = U.USER_ID " + 
-					"WHERE U.USERNAME=? "+//AND U.USERPASSWORD=? " + 
-					"ORDER BY A.ACCOUNT_ID;";
-			PreparedStatement pstmt = con.prepareStatement(sql);
-			pstmt.setString(1,  username);
-			//pstmt.setInt(2, password);
-			ResultSet rs = pstmt.executeQuery();
-			while(rs.next()) {
-				int userId = rs.getInt("USER_ID");
-				String accountType = rs.getString("ACCOUNTS_TYPE");
-				accounts.add(new Accounts(new BankUser(userId, username, password),accountType));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return accounts;
-	}
-	//fix here
+
+
 	@Override
-	public void createAccount(BankUser user) {
-		Accounts account = new Accounts();
-		try (Connection con = ConnectionUtil.getConnection()){
-			String sql = "INSERT INTO ACCOUNT (USER_ID, ACCOUNT_TYPE, ACCOUNT_BALANCE) VALUES (?, ?, ?)";
-			PreparedStatement pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, account.getUser().getUserId());
-			pstmt.setString(2, account.getAccountType());
-			pstmt.setDouble(3, account.getAccountBalance());
-			pstmt.executeUpdate();
-			//account()
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	public void updateAccount(Accounts account) {
+		// TODO Auto-generated method stub
+		
 	}
+
+
+	@Override  //regular statement prone to sql injection -- will remedy remaining for now
+	public List<Accounts> getAccounts() {
+			List<Accounts> a = new ArrayList<>();
+			try (Connection con = ConnectionUtil.getConnectionFromFile(x)) {
+				String sql = "SELECT ACCOUNT_ID, ACCOUNTS_TYPE, ACCOUNT_BALANCE FROM ACCOUNTS";
+				Statement stmt = con.createStatement();
+				ResultSet rs = stmt.executeQuery(sql);
+				while (rs.next()) {
+					String type = rs.getString("ACCOUNTS_TYPE");
+					double balance = rs.getDouble("ACCOUNT_BALANCE");
+					int aId = rs.getInt("ACCOUNT_ID");
+					a.add(new Accounts(type, balance, aId));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			} 
+			return a;
+	}
+
+
+	@Override
+	public Accounts getAccountById(int accountId) throws AccountNotFoundException, IOException {
+			Accounts account = null;
+			try (Connection con = ConnectionUtil.getConnectionFromFile(x)){
+				String sql = "SELECT U.USER_ID, A.ACCOUNTS_TYPE, A.ACCOUNT_BALANCE, A.ACCOUNT_ID"
+						+ " FROM ACCOUNTS A INNER JOIN BANK_USER U ON A.USER_ID = U.USER_ID"
+						+ " WHERE A.ACCOUNT_ID = ?";
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, accountId);
+				ResultSet rs = pstmt.executeQuery();
+				if(rs.next()) {
+					int userId = rs.getInt("USER_ID");
+					String accountType = rs.getString("ACCOUNTS_TYPE");
+					double accountBalance = rs.getDouble("ACCOUNT_BALANCE");
+					int aId = rs.getInt("ACCOUNT_ID");
+					account = new Accounts(new BankUser(userId), accountType, accountBalance, aId);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			} 
+
+			return account;
+	}
+
+
+	@Override
+	public List<Accounts> getUserAccountsByLogin(String username, int password) throws IOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public double getCurrentBalance(int accountId) throws AccountNotFoundException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
 	@Override
 	public void deleteAccount(Accounts account) {
-		try (Connection con = ConnectionUtil.getConnection()){
-			String sql = "DELETE FROM ACCOUNT WHERE ACCOUNT_ID = ?";
-			PreparedStatement pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, account.getAccountId());
-			pstmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	@Override
-	public void updateAccountByWithdraw(Accounts accounts, double withdraw) throws OverdraftException{
-		if(withdraw > 0) {
-			try (Connection con = ConnectionUtil.getConnection()){
-				String sql = "{call SP_WITHDRAW(?,?,?)}";
-				CallableStatement cs = con.prepareCall(sql);
-				cs.setInt(1, accounts.getAccountId());
-				cs.setDouble(2, withdraw);
-				cs.registerOutParameter(3, java.sql.Types.DECIMAL);
-				cs.execute();
-				accounts.setAccountBalance(accounts.getAccountBalance() - cs.getDouble(3)); 				
-			}catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}else {
-			System.out.println("Please enter a positve number. ");
-			//If withdraw is greater than currentBalance
-		}
-	}
-	
-	@Override
-	public void updateAccountByDeposit(Accounts accounts, double deposit) {
-		if(deposit > 0 && deposit < 500) {
-			try (Connection con = ConnectionUtil.getConnection()){
-				String sql = "{call SP_DEPOSIT(?,?,?)}";  
-				CallableStatement cs = con.prepareCall(sql);
-				cs.setInt(1, accounts.getAccountId());
-				cs.setDouble(2, deposit);
-				cs.registerOutParameter(3, java.sql.Types.DECIMAL);
-				cs.execute();
-				accounts.setAccountBalance(accounts.getAccountBalance() + cs.getDouble(3)); 			
-			}catch (SQLException e) {
-				e.printStackTrace();
-			}		
-		}else {
-			System.out.println("Please enter a number greater than 0 or less than 500.");
-		}
-	}
-	
-	@Override
-	public double getCurrentBalance(int accountId) throws AccountNotFoundException {  
-		double accountBalance = 0;
-		try(Connection con = ConnectionUtil.getConnection()){
-			String sql = "SELECT ACCOUNT_BALANCE FROM ACCOUNTS WHERE ACCOUNT_ID=?";
-			PreparedStatement stmt = con.prepareStatement(sql);
-			ResultSet rs = stmt.executeQuery(sql);
-			accountBalance = rs.getDouble("ACCOUNT_BALANCE");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return accountBalance;
+		// TODO Auto-generated method stub
+		
 	}
 }
 

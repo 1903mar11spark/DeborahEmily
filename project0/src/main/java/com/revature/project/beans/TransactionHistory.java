@@ -3,8 +3,17 @@ package com.revature.project.beans;
 public class TransactionHistory {
 	
 	
+	public TransactionHistory(int transactionId, double deposit, double withdraw, Accounts account) {
+		super();
+		this.transactionId = transactionId;
+		this.deposit = deposit;
+		this.withdraw = withdraw;
+		this.account = account;
+	}
+	
 	
 	public TransactionHistory(Accounts account) {
+		super();
 		this.account=account;
 	}
 	
