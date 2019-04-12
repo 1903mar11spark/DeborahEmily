@@ -35,6 +35,7 @@ public class Access {
 		} catch (NumberFormatException | UserNotFoundException | IOException e) {
 			e.printStackTrace();
 		}
+		
 	}
 		
 	
@@ -63,36 +64,38 @@ public class Access {
 	}
 
 	//User Methods
-	public static void userLogin(BufferedReader scan) throws UserNotFoundException, IOException {
+	public static void userLogin(BufferedReader scan) {
+		try {
 		System.out.println("                          USER LOGIN                       ");
 		System.out.println("Please Enter Username");
 		String user = scan.readLine();
 		System.out.println("Please Enter Password");
 		int password = Integer.parseInt(scan.readLine());
 		if(bud.getUserByLogin(user, password)){
-			userMainMenu(scan);
+			try {
+				userMainMenu(scan);
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		};
+		} catch(IOException e){
+			e.printStackTrace();
+		}
 	}	
 
-	private static void userMainMenu(BufferedReader scan) throws NumberFormatException, IOException {
+	private static void userMainMenu(BufferedReader scan) {
+		try {
 		Sections.thirdSection();
 		int txt = Integer.parseInt(scan.readLine());
 	    switch (txt) {
 	    case 1://go to savings account
 	    	System.out.println("You have selected Savings Account");
-	    	try {
-				goToSavings(scan);
-			} catch (AccountNotFoundException e1) {
-				e1.printStackTrace();
-			}
+	    	goToSavings(scan);
 	    	break;
 	    case 2://go to checking account
 	    	System.out.println("You have selected Checking Account");
-	    	try {
-				goToChecking(scan);
-			} catch (AccountNotFoundException e) {
-				e.printStackTrace();
-			}
+	    	goToChecking(scan);
 	    	break;
 	    case 3://make a new account
 	    	System.out.println("You have selected to make a New Account");
@@ -105,7 +108,11 @@ public class Access {
 	    default:
 	    	System.out.println("Please select either 1, 2, or 3");
 	    }
-		
+		} catch (NumberFormatException e) {
+			e.getStackTrace();
+		} catch(IOException e){
+			e.printStackTrace();
+		}
 	}
 
 	private static void goCreateAccount(BufferedReader scan) throws NumberFormatException, IOException {
@@ -127,12 +134,14 @@ public class Access {
     	}  	
 	}
 	
-	private static void goToSavings(BufferedReader scan) throws NumberFormatException, IOException, AccountNotFoundException {
+	private static void goToSavings(BufferedReader scan) {
+		try {
 		Sections.fourthSection();
 		System.out.println("First enter your accountID");
 		int accountId = Integer.parseInt(scan.readLine());
 		double balance = acd.getCurrentBalance(accountId);
 		System.out.println("YOUR CURRENT BALANCE IS: "+ balance);
+		System.out.println("Choose next action");
 		
 		int action = Integer.parseInt(scan.readLine());
 	    switch (action) {
@@ -140,6 +149,7 @@ public class Access {
 	    	System.out.println("How much would you like to deposit?");
 	    	double deposit = Double.parseDouble(scan.readLine());
 	    	acd.updateAccountByDeposit(accountId, deposit);
+	    	balance = acd.getCurrentBalance(accountId);
 	    	System.out.println(balance);
 	    	userMainMenu(scan);
 	    	break;
@@ -147,6 +157,7 @@ public class Access {
 	    	System.out.println("How much would you like to Withdrawl");
 	    	double withdraw = Double.parseDouble(scan.readLine());
 	    	acd.updateAccountByWithdraw(accountId, withdraw);
+	    	balance = acd.getCurrentBalance(accountId);
 	    	System.out.println(balance);
 	    	userMainMenu(scan);
 	    	break;
@@ -180,10 +191,18 @@ public class Access {
 	    default:
 	    	System.out.println("Please select a number 1 through 4");
 	    }
-		
+		} catch (NumberFormatException e) {
+			e.getStackTrace();
+		} catch(IOException e){
+			e.printStackTrace();
+		} catch(AccountNotFoundException e) {
+			e.getStackTrace();
+		}
+	
 	}
 	
-	private static void goToChecking(BufferedReader scan) throws AccountNotFoundException, NumberFormatException, IOException {
+	private static void goToChecking(BufferedReader scan) {
+		try{
 		System.out.println("Enter your account Id ");
 		int accountId = Integer.parseInt(scan.readLine());
 		double balance = acd.getCurrentBalance(accountId);
@@ -195,6 +214,7 @@ public class Access {
 	    	System.out.println("How much would you like to deposit?");
 	    	double deposit = Double.parseDouble(scan.readLine());
 	    	acd.updateAccountByDeposit(accountId, deposit);
+	    	balance = acd.getCurrentBalance(accountId);
 	    	System.out.println(balance);
 	    	userMainMenu(scan);
 	    	break;
@@ -202,6 +222,7 @@ public class Access {
 	    	System.out.println("How much would you like to Withdrawl");
 	    	double withdraw = Double.parseDouble(scan.readLine());
 	    	acd.updateAccountByWithdraw(accountId, withdraw);
+	    	balance = acd.getCurrentBalance(accountId);
 	    	System.out.println(balance);
 	    	userMainMenu(scan);
 	    	break;
@@ -245,12 +266,21 @@ public class Access {
 	    default:
 	    	System.out.println("Please select a number 1 through 4");
 	    }
+		} catch (NumberFormatException e) {
+			e.getStackTrace();
+		} catch(IOException e){
+			e.printStackTrace();
+		} catch(AccountNotFoundException e) {
+			e.getStackTrace();
+		}
+		
 	}
 	
 	
 //Manager Methods
   
-	private static void managerLogin(BufferedReader scan) throws IOException {
+	private static void managerLogin(BufferedReader scan) {
+		try {
 		System.out.println("Please Enter Manager Username");
 		String userMan = scan.readLine();
 		System.out.println("Please Enter Manager Password");
@@ -281,10 +311,16 @@ public class Access {
 					}
 		    	  }
 		      }	  
+		}catch
+			(IOException e){
+				e.printStackTrace();
+			}
+		
 	}
 	
 	
-	private static void managerMainMenu(BufferedReader scan) throws IOException {
+	private static void managerMainMenu(BufferedReader scan) {
+		try {
 		Sections.seventhSection();
 		int txt = Integer.parseInt(scan.readLine());
 	    switch (txt) {
@@ -375,7 +411,9 @@ public class Access {
 	    default:
 	    	System.out.println("Please select select a number 1 through 5");
 	    }
-	    
+		} catch (IOException e) {
+			e.printStackTrace(); 
+		}
 	}
 	
 	private static void updateExistingUser(BufferedReader scan) throws NumberFormatException, IOException {
