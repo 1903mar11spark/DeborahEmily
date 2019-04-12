@@ -66,7 +66,7 @@ public class Sections {
 			System.out.println("        *                        *                        *");
 			System.out.println("        *                       * *                       *");
 			System.out.println("        *                                                 *");
-			System.out.println("        *                 CHECKING ACCOUNT                *");
+			System.out.println("        *                  ACCOUNT                *");
 			System.out.println("        *                                                 *");
 			System.out.println("        *    	  1. DEPOSIT                         	  *");
 			System.out.println("        *    	  2. WITHDRAW                             *");
@@ -79,23 +79,6 @@ public class Sections {
 			System.out.println("                     PLEASE INPUT A NUMBER");  	
 		}
 	   
-	   public static void sixthSection(){
-		   	System.out.println("                                        		           ");
-			System.out.println("                                             		       ");
-			System.out.println("    	*-------------------------------------------------*");
-			System.out.println("        *                        *                        *");
-			System.out.println("        *                       * *                       *");
-			System.out.println("        *                                                 *");
-			System.out.println("        *                CREATE NEW ACCOUNT               *");
-			System.out.println("        *                                                 *");
-			System.out.println("        *    	  1. NEW SAVINGS ACCOUNT               	  *");
-			System.out.println("        *    	  2. NEW CHECKING ACCOUNT                 *");
-			System.out.println("        *     	  3. RETURN TO MAIN MENU                  *");
-			System.out.println("        *         4. EXIT BANKING APPLICATION             *");
-			System.out.println("        *                                                 *");
-			System.out.println("        *-------------------------------------------------*");
-			System.out.println("                     PLEASE INPUT A NUMBER");  	
-		}
 	   
 	   public static void seventhSection(){
 		   	System.out.println("                                        		           ");
