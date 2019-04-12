@@ -4,6 +4,7 @@ package com.revature.project.dao;
 import java.io.IOException;
 //import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 //import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -43,33 +44,6 @@ public class AccountDAOImpl implements AccountDAO {
 //		return accounts;
 //	}
 //	
-//	
-//	@Override
-//	public Accounts getAccountById(int accountId){
-//		Accounts account = null;
-//		try (Connection con = ConnectionUtil.getConnectionFromFile(x)){
-//			String sql = "SELECT U.USER_ID, U.USERNAME, U.USERPASSWORD, A.ACCOUNTS_TYPE"
-//					+ " FROM ACCOUNTS A INNER JOIN BANK_USER U ON A.USER_ID = U.USER_ID"
-//					+ " WHERE A.ACCOUNT_ID = ?";
-//			PreparedStatement pstmt = con.prepareStatement(sql);
-//			pstmt.setInt(1, accountId);
-//			ResultSet rs = pstmt.executeQuery(sql);
-//			if(rs.next()) {
-//				int userId = rs.getInt("USER_ID");
-//				String username = rs.getString("USERNAME");
-//				int password = rs.getInt("USERPASSWORD");
-//				String accountType = rs.getString("ACCOUNTS_TYPE");
-//				//double accountBalance = rs.getDouble("ACCOUNT_BALANCE");
-//				account = new Accounts(new BankUser(userId, username, password), accountType);
-//			}
-//
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		} catch (IOException e1) {
-//			e1.printStackTrace();
-//		} 
-//
-//		return account;
 //		
 //	}
 //	@Override //NEEDS REMEDIED
@@ -199,10 +173,10 @@ public class AccountDAOImpl implements AccountDAO {
 				Statement stmt = con.createStatement();
 				ResultSet rs = stmt.executeQuery(sql);
 				while (rs.next()) {
-					String typea = rs.getString("ACCOUNTS_TYPE");
+					String type = rs.getString("ACCOUNTS_TYPE");
 					double balance = rs.getDouble("ACCOUNT_BALANCE");
 					int aId = rs.getInt("ACCOUNT_ID");
-					a.add(new Accounts(typea, balance, aId));
+					a.add(new Accounts(type, balance, aId));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -215,8 +189,28 @@ public class AccountDAOImpl implements AccountDAO {
 
 	@Override
 	public Accounts getAccountById(int accountId) throws AccountNotFoundException, IOException {
-		// TODO Auto-generated method stub
-		return null;
+			Accounts account = null;
+			try (Connection con = ConnectionUtil.getConnectionFromFile(x)){
+				String sql = "SELECT U.USER_ID, A.ACCOUNTS_TYPE, A.ACCOUNT_BALANCE, A.ACCOUNT_ID"
+						+ " FROM ACCOUNTS A INNER JOIN BANK_USER U ON A.USER_ID = U.USER_ID"
+						+ " WHERE A.ACCOUNT_ID = ?";
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, accountId);
+				ResultSet rs = pstmt.executeQuery();
+				if(rs.next()) {
+					int userId = rs.getInt("USER_ID");
+					String accountType = rs.getString("ACCOUNTS_TYPE");
+					double accountBalance = rs.getDouble("ACCOUNT_BALANCE");
+					int aId = rs.getInt("ACCOUNT_ID");
+					account = new Accounts(new BankUser(userId), accountType, accountBalance, aId);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			} 
+
+			return account;
 	}
 
 
