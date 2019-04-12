@@ -30,9 +30,7 @@ import com.revature.project.exceptions.UserNotFoundException;
 
 public class Access {
 	
-	
-	
-	public static String xFile = "/Users/Em/Desktop/Pro0/DeborahEmily/project0/src/main/java/com/revature/project/main/Connections.properties";
+
 	public static AccountDAOImpl acd = new AccountDAOImpl();
 	static TransactionHistoryDAOImpl thd = new TransactionHistoryDAOImpl();
 	static BankUserDAOImpl bud = new BankUserDAOImpl();
@@ -101,12 +99,11 @@ public class Access {
 	    	userLogin(scan);
 	    	break;
 	    case 2:
-	    	System.out.println("You have selected Manager Login");
-	    	//managerLogin(scan);
+	    	managerLogin(scan);
 	    	break;
 	    case 3:
 	    	System.out.println("You have selected to Exit the Application. Goodbye!");
-	    	//userEntry(scan);
+	    	scan.close();
 	    	break;
 	    default:
 	    	System.out.println("Please select either 1, 2, or 3");
@@ -124,7 +121,6 @@ public class Access {
 		if(bud.getUser(user, password) != null){
 			userMainMenu(scan);
 		};
-
 	}
 
 //	public static void getUserAccounts(BufferedReader sc) throws NumberFormatException, IOException {
@@ -143,19 +139,20 @@ public class Access {
 		int txt = Integer.parseInt(scan.readLine());
 	    switch (txt) {
 	    case 1://go to savings account
-	    	System.out.println("You have selected User Login");
-	    	goToSavings();
+	    	System.out.println("You have selected Savings Account");
+	    	goToSavings(scan);
 	    	break;
 	    case 2://go to checking account
-	    	System.out.println("You have selected Manager Login");
-	    	goToChecking();
+	    	System.out.println("You have selected Checking Account");
+	    	goToChecking(scan);
 	    	break;
 	    case 3://make a new account
 	    	System.out.println("You have selected to make a New Account");
-	    	createAccount();
+	    	createAccount(scan);
 	    	break;
 	    case 4: //exit banking application
 	    	System.out.println("You have selected to Exit the Application. Goodbye!");
+	    	scan.close();
 	    	break;
 	    default:
 	    	System.out.println("Please select either 1, 2, or 3");
@@ -205,69 +202,69 @@ public class Access {
 	    }
 		
 	}
-//	
-//	private static void goToChecking() {
-//		Sections.fifthSection();
-//		balance = get
-//				
-//		System.out.println("YOUR CURRENT BALANCE IS: "+balance);//need to write code for balance
-//		int txt = scan.nextInt();
-//	    switch (txt) {
-//	    case 1://deposit
-//	    	System.out.println("You have selected to Make a Deposit");
-//	    	goToSavings();
-//	    	break;
-//	    case 2://withdraw
-//	    	System.out.println("You have selected to Make a Withdrawl");
-//	    	goToChecking();
-//	    	break;
-//	    case 3://transaction history
-//	    	System.out.println("You have selected to Review Transaction History");
-//	    	createAccount();
-//	    	break;
-//	    case 4: //close account
-//	    	System.out.println("You have selected to Close an Account");
-//	    	break;
-//	    case 5://main menu
-//	    	System.out.println("You have selected to Return to Main Menu");
-//	    	userMainMenu(null); //-----------------------------------------------need to redirect with actual param
-//	    	break;
-//	    case 6://exit 
-//	    	System.out.println("You have selected to Exit the Application. Goodbye!");
-//	    	break;
-//	    default:
-//	    	System.out.println("Please select a number 1 through 4");
-//	    }
-//	}
-//	
-//	private static void createAccount() {
-//		Sections.sixthSection();
-//		int txt = scan.nextInt();
-//	    switch (txt) {
-//	    case 1://create new savings account
-//	    	System.out.println("You have selected to Create a New Savings Account");
-//	    	goToSavings();
-//	    	break;
-//	    case 2://create new checking account
-//	    	System.out.println("You have selected to Create a New Checking Account");
-//	    	goToChecking();
-//	    	break;
-//	    case 3://return to main menu
-//	    	System.out.println("You have selected to Return to Main Menu");
-//	    	userMainMenu(null); //---------------------------------------------------------------another to redirect wiht actual param
-//	    	break;
-//	    case 4: //exit banking application
-//	    	System.out.println("You have selected to Exit the Application. Goodbye!");
-//	    	break;
-//	    default:
-//	    	System.out.println("Please select a number 1 through 4");
-//	    }
-//	}
-//
-//	
-//	
-//	//Manager Methods
-//	
+	
+	private static void goToChecking() {
+		Sections.fifthSection();
+		balance = get
+				
+		System.out.println("YOUR CURRENT BALANCE IS: "+balance);//need to write code for balance
+		int txt = scan.nextInt();
+	    switch (txt) {
+	    case 1://deposit
+	    	System.out.println("You have selected to Make a Deposit");
+	    	goToSavings();
+	    	break;
+	    case 2://withdraw
+	    	System.out.println("You have selected to Make a Withdrawl");
+	    	goToChecking();
+	    	break;
+	    case 3://transaction history
+	    	System.out.println("You have selected to Review Transaction History");
+	    	createAccount();
+	    	break;
+	    case 4: //close account
+	    	System.out.println("You have selected to Close an Account");
+	    	break;
+	    case 5://main menu
+	    	System.out.println("You have selected to Return to Main Menu");
+	    	userMainMenu(null); //-----------------------------------------------need to redirect with actual param
+	    	break;
+	    case 6://exit 
+	    	System.out.println("You have selected to Exit the Application. Goodbye!");
+	    	break;
+	    default:
+	    	System.out.println("Please select a number 1 through 4");
+	    }
+	}
+	
+	private static void createAccount() {
+		Sections.sixthSection();
+		int txt = scan.nextInt();
+	    switch (txt) {
+	    case 1://create new savings account
+	    	System.out.println("You have selected to Create a New Savings Account");
+	    	goToSavings();
+	    	break;
+	    case 2://create new checking account
+	    	System.out.println("You have selected to Create a New Checking Account");
+	    	goToChecking();
+	    	break;
+	    case 3://return to main menu
+	    	System.out.println("You have selected to Return to Main Menu");
+	    	userMainMenu(null); //---------------------------------------------------------------another to redirect wiht actual param
+	    	break;
+	    case 4: //exit banking application
+	    	System.out.println("You have selected to Exit the Application. Goodbye!");
+	    	break;
+	    default:
+	    	System.out.println("Please select a number 1 through 4");
+	    }
+	}
+
+	
+	
+	//Manager Methods
+	
 //	//getUserAccountsByLogin --Gets account 
 //	   
 	private static void managerLogin(BufferedReader scan) {
