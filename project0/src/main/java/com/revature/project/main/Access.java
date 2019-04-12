@@ -1,8 +1,10 @@
 package com.revature.project.main;
 
 
+import java.io.BufferedReader;
 //import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 //import java.io.InputStreamReader;
@@ -13,12 +15,13 @@ import com.revature.project.beans.Accounts;
 //import javax.swing.BorderFactory;
 //import javax.swing.JPanel;
 
-//import com.revature.project.beans.Accounts;
-//import com.revature.project.beans.BankUser;
+import com.revature.project.beans.Accounts;
+import com.revature.project.beans.BankUser;
 import com.revature.project.dao.AccountDAOImpl;
-//import com.revature.project.dao.BankUserDAO;
+import com.revature.project.dao.BankUserDAO;
 import com.revature.project.dao.BankUserDAOImpl;
 import com.revature.project.dao.TransactionHistoryDAOImpl;
+import com.revature.project.exceptions.AccountNotFoundException;
 import com.revature.project.exceptions.UserNotFoundException;
 
 
@@ -32,20 +35,49 @@ public class Access {
 	static TransactionHistoryDAOImpl thd = new TransactionHistoryDAOImpl();
 	static BankUserDAOImpl bud = new BankUserDAOImpl();
 	static Sections section = new Sections();
+
 	
-//	static ArrayList<BankUser> userList = new ArrayList<User>();
-//	static ArrayList<Account> accountList = new ArrayList<Account>();
-	
-	public static void main(String[] args) throws UserNotFoundException, NumberFormatException, IOException {
+	public static void main(String[] args) throws NumberFormatException, IOException { //throws UserNotFoundException, NumberFormatException, IOException {
 //		BufferedReader sc = new BufferedReader(new InputStreamReader(System.in));
-//		//String username = sc.readLine();
-//		int password = Integer.parseInt(sc.readLine());
+//		System.out.println("type here fool");
+//		
+//		int accountId = Integer.parseInt(sc.readLine());
+//		
+//		double deposit = Double.parseDouble(sc.readLine());
+//		AccountDAOImpl acd = new AccountDAOImpl();
+//		
+//		acd.updateAccountByDeposit(accountId, deposit);
+//		Scanner scan = new Scanner(System.in);
+//		int userId = scan.nextInt();
+//		String accountType = scan.nextLine();
+		
+		//acd.deleteAccount(userId);
+		
+		//acd.createAccount(userId, accountType);
+//		scan.close();
+		
+		
+		
+		
+//		List<Accounts> accountsList = acd.getAccounts();
+//		for(Accounts a: accountsList) {
+//	
+//		System.out.println(a);
+//		}
+		
+
 		AccountDAOImpl acd = new AccountDAOImpl();
-		List<Accounts> accountsList = acd.getAccounts();
-		for(Accounts a: accountsList) {
-			System.out.println(a);
-		}
+		int userId = 9999;
+		
+			try {
+				System.out.println(acd.getCurrentBalance(userId));
+			} catch (AccountNotFoundException e) {
+				
+				e.printStackTrace();
+			}
+			
 	}
+	
 	
 }	
 //	public static void entry(BufferedReader sc) throws UserNotFoundException, NumberFormatException, IOException {

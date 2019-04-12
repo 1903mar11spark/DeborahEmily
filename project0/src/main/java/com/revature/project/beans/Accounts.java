@@ -7,11 +7,13 @@ public class Accounts  {
 	private double accountBalance;
 	private BankUser user;
 	private double overdraftFee;
+	
 
 	public Accounts(BankUser user) {
 		super();
 		this.user = user;
 	}
+	
 
 	public Accounts() {
 		super();
