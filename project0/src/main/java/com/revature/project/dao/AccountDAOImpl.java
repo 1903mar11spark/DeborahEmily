@@ -27,7 +27,7 @@ public class AccountDAOImpl implements AccountDAO {
 				cs.setInt(1, accountId);
 				cs.setDouble(2, withdraw);
 				cs.execute();		
-				throw new AccountNotFoundException();
+				//throw new AccountNotFoundException();
 			}catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -45,7 +45,7 @@ public class AccountDAOImpl implements AccountDAO {
 				cs.setInt(1, accountId);
 				cs.setDouble(2, deposit);
 				cs.execute();
-				throw new AccountNotFoundException();
+				//throw new AccountNotFoundException();
 			}catch (SQLException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -105,7 +105,7 @@ public class AccountDAOImpl implements AccountDAO {
 			if(rs.next()) {
 				double accountBalance = rs.getDouble("ACCOUNT_BALANCE");
 				balance = accountBalance;
-			} throw new AccountNotFoundException();
+			} //throw new AccountNotFoundException();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (IOException e1) {
@@ -122,7 +122,6 @@ public class AccountDAOImpl implements AccountDAO {
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, accountId);
 			pstmt.executeUpdate();
-			throw new AccountNotFoundException();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (IOException e1) {
@@ -134,31 +133,5 @@ public class AccountDAOImpl implements AccountDAO {
 }		
 
 
-//	}
-//	@Override //NEEDS REMEDIED
-//	public List<Accounts> getUserAccountsByLogin(String username, int password) throws IOException {
-//		List<Accounts> accounts = new ArrayList<>();
-//		try (Connection con = ConnectionUtil.getConnectionFromFile(x);){
-//			String sql = "SELECT A.ACCOUNT_ID, A.ACCOUNTS_TYPE, U.USER_ID " + 
-//					"FROM ACCOUNTS A " + 
-//					"INNER JOIN BANK_USER U " + 
-//					"ON A.USER_ID = U.USER_ID " + 
-//					"WHERE U.USERNAME=? "+//AND U.USERPASSWORD=? " + 
-//					"ORDER BY A.ACCOUNT_ID;";
-//			PreparedStatement pstmt = con.prepareStatement(sql);
-//			pstmt.setString(1,  username);
-//			//pstmt.setInt(2, password);
-//			ResultSet rs = pstmt.executeQuery();
-//			while(rs.next()) {
-//				int userId = rs.getInt("USER_ID");
-//				String accountType = rs.getString("ACCOUNTS_TYPE");
-//				accounts.add(new Accounts(new BankUser(userId, username, password),accountType));
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		return accounts;
-//	}
-//	//fix here
 
 

@@ -3,19 +3,15 @@ package com.revature.project.main;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import java.util.Scanner;
 
 import com.revature.project.beans.Accounts;
 import com.revature.project.beans.BankUser;
 import com.revature.project.dao.AccountDAOImpl;
-import com.revature.project.dao.BankUserDAO;
 import com.revature.project.dao.BankUserDAOImpl;
 import com.revature.project.dao.TransactionHistoryDAOImpl;
 import com.revature.project.exceptions.AccountNotFoundException;
@@ -68,15 +64,15 @@ public class Access {
 
 	//User Methods
 	public static void userLogin(BufferedReader scan) throws UserNotFoundException, IOException {
-		System.out.println("                       USER LOGIN                       ");
+		System.out.println("                          USER LOGIN                       ");
 		System.out.println("Please Enter Username");
 		String user = scan.readLine();
 		System.out.println("Please Enter Password");
 		int password = Integer.parseInt(scan.readLine());
-		if(bud.getUser(user, password) != null){
+		if(bud.getUserByLogin(user, password)){
 			userMainMenu(scan);
 		};
-	}
+	}	
 
 	private static void userMainMenu(BufferedReader scan) throws NumberFormatException, IOException {
 		Sections.thirdSection();
@@ -132,12 +128,12 @@ public class Access {
 	}
 	
 	private static void goToSavings(BufferedReader scan) throws NumberFormatException, IOException, AccountNotFoundException {
-		System.out.println("Enter your account Id ");
+		Sections.fourthSection();
+		System.out.println("First enter your accountID");
 		int accountId = Integer.parseInt(scan.readLine());
 		double balance = acd.getCurrentBalance(accountId);
-		System.out.println("YOUR CURRENT BALANCE IS: "+balance);
+		System.out.println("YOUR CURRENT BALANCE IS: "+ balance);
 		
-		Sections.fourthSection();
 		int action = Integer.parseInt(scan.readLine());
 	    switch (action) {
 	    case 1://deposit

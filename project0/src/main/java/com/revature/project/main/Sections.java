@@ -29,11 +29,10 @@ public class Sections {
 			System.out.println("        *                                                 *");
 			System.out.println("        *                    MAIN MENU                    *");
 			System.out.println("        *                                                 *");
-			System.out.println("        *         1. ACCOUNT BALANCES			   *");
-			System.out.println("        *    	  2. MANAGE SAVINGS ACCOUNT            	  *");
-			System.out.println("        *    	  3. MANAGE CHECKING ACCOUNT              *");
-			System.out.println("        *     	  4. CREATE NEW ACCOUNT                   *");
-			System.out.println("        *         5. EXIT BANKING APPLICATION             *");
+			System.out.println("        *    	  1. MANAGE SAVINGS ACCOUNT            	  *");
+			System.out.println("        *    	  2. MANAGE CHECKING ACCOUNT              *");
+			System.out.println("        *     	  3. CREATE NEW ACCOUNT                   *");
+			System.out.println("        *         4. EXIT BANKING APPLICATION             *");
 			System.out.println("        *                                                 *");
 			System.out.println("        *-------------------------------------------------*");
 			System.out.println("                     PLEASE INPUT A NUMBER");  	
