@@ -10,7 +10,6 @@ public interface TransactionHistoryDAO {
 	public List<TransactionHistory> getTransactionHistory(int accountId) throws AccountNotFoundException;
 	public double updateBalanceWithdraw(double withdraw);
 	public double updateBalanceDeposit(double deposit);
-	
-	
+
 
 }

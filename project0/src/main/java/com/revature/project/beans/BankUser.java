@@ -4,6 +4,14 @@ package com.revature.project.beans;
 
 public class BankUser {
 	
+	private int userId;	
+	private String username;
+	private int password;
+	
+	public BankUser(int userId) {
+		super();
+	}
+	
 	public BankUser() {
 		super();
 	}
@@ -15,22 +23,28 @@ public class BankUser {
 		this.password = password;
 	}
 	
-	protected int userId;	
-	protected String username;
-	protected int password;
 	
+	public BankUser(String username, int password) {
+		super();
+		this.username = username;
+		this.password = password;
+	}
+	
+
 	public int getUserId() {
 		return userId;
 	}
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
+	
 	public String getUsername() {
 		return username;
 	}
 	public void setUsername(String username) {
 		this.username = username;
 	}
+	
 	public int getPassword() {
 		return password;
 	}

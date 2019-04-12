@@ -2,23 +2,34 @@ package com.revature.project.beans;
 
 public class Accounts  {
 
-	public Accounts() {
-		super();
-	}
-
-	public Accounts(BankUser user, String accountType) {
-		super();
-		this.user = user;
-		this.accountType = accountType;
-	}
-	
-
 	private int accountId;
 	private String accountType;
 	private double accountBalance;
 	private BankUser user;
 	private double overdraftFee;
 
+	public Accounts(BankUser user) {
+		super();
+		this.user = user;
+	}
+
+	public Accounts() {
+		super();
+	}
+	public Accounts (String accountType, double accountBalance, int accountId) {
+		super();
+		this.accountType = accountType;
+		this.accountId = accountId;
+		this.accountBalance = accountBalance;
+	}
+	
+	public Accounts(BankUser user, String accountType, double accountBalance, int accountId) {
+		super();
+		this.user = user;
+		this.accountType = accountType;
+		this.accountId = accountId;
+		this.accountBalance = accountBalance;
+	}
 
 	public int getAccountId() {
 		return accountId;
